@@ -64,7 +64,8 @@ Ornar, gravar com esmalte preto: Nigelar
 Parapeito que defende um campo entrincheirado: Valo
 Peneira de seda: Tamis
 Pequena bigorna de aço, sem hastes: Tás
-Pequeno barrete com que os bispos e outros eclesiásticos cobrem a parte superior do crânio: SolidéuPermanência (em oposição a partida): Ficada
+Pequeno barrete com que os bispos e outros eclesiásticos cobrem a parte superior do crânio: Solidéu
+Permanência (em oposição a partida): Ficada
 Pessoa indeterminada: Quidam
 Planta bienal da família das escrofulariáceas: Abeloura
 Puxão que dá o pescador quando sente que o peixe mordeu a isca: Sacadela
@@ -79,10 +80,12 @@ Suspensão aparente da vida: Abiose
 Unidade de trabalho em todas as suas formas (Fís.): Erg
 Variedade de café muito apreciado: Moca
 Vela latina do mastro grande: Oste
-Vila do concelho de Esposende, distrito de Braga, situada na margem esquerda do Rio Cávado, junto à foz deste rio: FãoVinagre considerado como excipiente, em farmácia: Oxeol
+Vila do concelho de Esposende, distrito de Braga, situada na margem esquerda do Rio Cávado, junto à foz deste rio: Fão
+Vinagre considerado como excipiente, em farmácia: Oxeol
 Voracidade: Edacidade
 Zarolho (prov.): Zambaio
-A primeira pedra que forma a volta de um arco, e assenta sobre um capitel, cimalha ou ombreira: SaimelAbertura por onde os mastros dos navios assentam na carlinga (Náut.): Enora
+A primeira pedra que forma a volta de um arco, e assenta sobre um capitel, cimalha ou ombreira: Saimel
+Abertura por onde os mastros dos navios assentam na carlinga (Náut.): Enora
 Adolescência: Efebia
 Álcool etílico: Etanol
 Antiga bandeira dos exércitos romanos: Vexilo
@@ -147,7 +150,8 @@ Regato não permanente: Arroio
 Ritmo de dança originário da América Latina: Bamba
 Rugoso: Rofo
 Série de quadros de madeira ou ferro, munidos de escápulas, onde se estendem os tecidos a secar ao sol, nas fábricas de lanifícios: Râmola
-Serra para cortar pedra: ArceteSoldado turco ou egípcio, filho de cristãos, subtraído em criança a seus pais, doutrinado no maometismo e adestrado para a guerra: Rume
+Serra para cortar pedra: Arcete
+Soldado turco ou egípcio, filho de cristãos, subtraído em criança a seus pais, doutrinado no maometismo e adestrado para a guerra: Rume
 Substância de propriedades análogas às da soda, ou da potassa: Alcali
 Suster com estacas (as videiras): Empar
 Tecido forte de linho ou de algodão, usado especialmente para vestuário: Brim

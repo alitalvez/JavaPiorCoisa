@@ -30,6 +30,7 @@ package br.uesc.lpiii.PalavrasCruzadas;
 */
 
 
+import java.awt.Point;
 import java.io.File;
 import java.util.Random;
 import javax.swing.JLabel;
@@ -57,12 +58,14 @@ public class UI extends javax.swing.JFrame
     int quantidadePalavras;
     
     JTextField textPalavra[];
+    JTextField bancoText[][];
     
     JLabel lbDica[];
     
     public UI() {
         initComponents();
         
+        Point localizacao = new Point(20, 60);
         Random gerador = new Random();
         leitor = new LeitorDicionario();
         dicionario = new File("extras/dicionarioPalCruz.txt");
@@ -70,7 +73,6 @@ public class UI extends javax.swing.JFrame
         quantidadePalavras = 0;
         while(quantidadePalavras < 5)
             quantidadePalavras = gerador.nextInt(15) + 1;
-        quantidadePalavras = 1; //APAGAR DEPOIS
         
         bancoPalavras = new String[quantidadePalavras][2];
         
@@ -84,27 +86,29 @@ public class UI extends javax.swing.JFrame
             System.out.println("Palavra " + (i+1) + ": " + bancoPalavras[i][1]);
         
         
-        textPalavra = new JTextField[bancoPalavras[0][1].length()];
+        bancoText = new JTextField[quantidadePalavras][];
         lbDica = new JLabel[quantidadePalavras];
         for(int j = 0; j < quantidadePalavras; j++)
-        {    
+        {
+            textPalavra = new JTextField[bancoPalavras[j][1].length()];
             lbDica[j] = new JLabel();
             lbDica[j].setSize(30, 30);
-            lbDica[j].setLocation(120, 150);
+            lbDica[j].setLocation(localizacao);
             lbDica[j].setText("Dica");
             lbDica[j].setToolTipText(bancoPalavras[j][0]);
             lbDica[j].setVisible(true);
             this.add(lbDica[j]);
+            bancoText[j] = new JTextField[bancoPalavras[j][1].length()];
             for(int i = 0; i < bancoPalavras[j][1].length();i++)
             {
                 textPalavra[i] = new JTextField();
                 textPalavra[i].setSize(30, 30);
-                textPalavra[i].setLocation(150 + (i * 30) , 150);
+                textPalavra[i].setLocation(localizacao.x + 30 + (i * 30) , localizacao.y);
                 textPalavra[i].setVisible(true);
+                bancoText[j][i] = textPalavra[i];
                 this.add(textPalavra[i]);
-                System.out.println(i);
-        
             }
+            localizacao.setLocation(localizacao.x, localizacao.y + 30);
         }
         
         lbResposta.setVisible(false);
@@ -141,21 +145,23 @@ public class UI extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(280, 280, 280)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(375, Short.MAX_VALUE)
                 .addComponent(lbResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(btOk)
-                .addGap(32, 32, 32))
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(270, 270, 270)
-                .addComponent(lbResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(260, 260, 260)
-                .addComponent(btOk))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(449, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(lbResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btOk))
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -167,7 +173,7 @@ public class UI extends javax.swing.JFrame
         {
             resposta[i] = "";
             for(int j = 0; j < bancoPalavras[i][1].length(); j++)
-                resposta[i] += textPalavra[j].getText();
+                resposta[i] += bancoText[i][j].getText();
             resposta[i] = resposta[i].toLowerCase();
         }
         for(int i = 0; i < quantidadePalavras; i++)
