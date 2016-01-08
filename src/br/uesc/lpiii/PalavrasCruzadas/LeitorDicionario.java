@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
  */
 public class LeitorDicionario 
 {
+    /*
+    */
     public String[] LeituraAleatoria(File dicionario, int tamanhoDicionario)
     {
         String linha = ""; 
@@ -40,6 +42,7 @@ public class LeitorDicionario
         
         return dicaPalavra;
     }
+    
     
     public int QuantidadeLinhas(File dicionario)
     {

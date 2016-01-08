@@ -31,50 +31,82 @@ package br.uesc.lpiii.PalavrasCruzadas;
 
 
 import java.io.File;
+import java.util.Random;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  *
  * @author gabriel
  */
-public class UI extends javax.swing.JFrame {
+public class UI extends javax.swing.JFrame 
+{
 
-    /**
-     * Creates new form UI
-     */
-    String[] palavra1;
-    String[] palavra2;
-    String[] palavra3;
-    String[] palavra4;
-    String[] palavra5;
+    /*
+        Declaração de variaves principais
+    */
+    String[] palavra;
+    String[][] bancoPalavras;
+    
     LeitorDicionario leitor;
+    
     File dicionario;
+    
     int tamanhoDicionario;
+ 
+    int quantidadePalavras;
+    
+    JTextField textPalavra[];
+    
+    JLabel lbDica[];
+    
     public UI() {
         initComponents();
+        
+        Random gerador = new Random();
         leitor = new LeitorDicionario();
         dicionario = new File("extras/dicionarioPalCruz.txt");
         tamanhoDicionario = leitor.QuantidadeLinhas(dicionario);
+        quantidadePalavras = 0;
+        while(quantidadePalavras < 5)
+            quantidadePalavras = gerador.nextInt(15) + 1;
+        quantidadePalavras = 1; //APAGAR DEPOIS
         
-        palavra1 = leitor.LeituraAleatoria(dicionario, tamanhoDicionario);
-        while(palavra1[1].length() != 5)
-            palavra1 = leitor.LeituraAleatoria(dicionario, tamanhoDicionario);
+        bancoPalavras = new String[quantidadePalavras][2];
         
-        palavra2 = leitor.LeituraAleatoria(dicionario, tamanhoDicionario);
-        while((palavra2[1].length() != 6) || (!palavra2[1].substring(1, 2).equals(palavra1[1].substring(1,2))))
-            palavra2 = leitor.LeituraAleatoria(dicionario, tamanhoDicionario);
+        for(int i = 0; i < quantidadePalavras; i++)
+        {
+            palavra = leitor.LeituraAleatoria(dicionario, tamanhoDicionario);
+            bancoPalavras[i][0] = palavra[0];
+            bancoPalavras[i][1] = palavra[1].toLowerCase();
+        }
+        for(int i = 0; i < quantidadePalavras; i++)
+            System.out.println("Palavra " + (i+1) + ": " + bancoPalavras[i][1]);
         
-        palavra3 = leitor.LeituraAleatoria(dicionario, tamanhoDicionario);
-        while((palavra3[1].length() != 5) || (!palavra3[1].equals(palavra1[1])) || (!palavra3[1].substring(1, 2).equals(palavra2[1].substring(4, 5))))
-            palavra3 = leitor.LeituraAleatoria(dicionario, tamanhoDicionario);
-        palavra1[1] = palavra1[1].toLowerCase();
-        palavra2[1] = palavra2[1].toLowerCase();
-        palavra3[1] = palavra3[1].toLowerCase();
-        System.out.println("Palavra: " + palavra1[1] + "\nPalavra: " + palavra2[1]);
-        System.out.println("Palavra: " + palavra3[1]);
         
-        lbDicaP1.setToolTipText(palavra1[0]);
-        lbDicaP2.setToolTipText(palavra2[0]);
-        lbDicaP3.setToolTipText(palavra3[0]);
+        textPalavra = new JTextField[bancoPalavras[0][1].length()];
+        lbDica = new JLabel[quantidadePalavras];
+        for(int j = 0; j < quantidadePalavras; j++)
+        {    
+            lbDica[j] = new JLabel();
+            lbDica[j].setSize(30, 30);
+            lbDica[j].setLocation(120, 150);
+            lbDica[j].setText("Dica");
+            lbDica[j].setToolTipText(bancoPalavras[j][0]);
+            lbDica[j].setVisible(true);
+            this.add(lbDica[j]);
+            for(int i = 0; i < bancoPalavras[j][1].length();i++)
+            {
+                textPalavra[i] = new JTextField();
+                textPalavra[i].setSize(30, 30);
+                textPalavra[i].setLocation(150 + (i * 30) , 150);
+                textPalavra[i].setVisible(true);
+                this.add(textPalavra[i]);
+                System.out.println(i);
+        
+            }
+        }
+        
         lbResposta.setVisible(false);
     }
 
@@ -87,46 +119,14 @@ public class UI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lbDicaP1 = new javax.swing.JLabel();
         btOk = new javax.swing.JButton();
-        p1t1 = new javax.swing.JTextField();
         lbResposta = new javax.swing.JLabel();
-        p1t2 = new javax.swing.JTextField();
-        p1t3 = new javax.swing.JTextField();
-        p1t4 = new javax.swing.JTextField();
-        p1t5 = new javax.swing.JTextField();
-        lbDicaP2 = new javax.swing.JLabel();
-        p2t1 = new javax.swing.JTextField();
-        p2t3 = new javax.swing.JTextField();
-        p2t4 = new javax.swing.JTextField();
-        p2t5 = new javax.swing.JTextField();
-        p3t1 = new javax.swing.JTextField();
-        lbDicaP3 = new javax.swing.JLabel();
-        p3t3 = new javax.swing.JTextField();
-        p3t4 = new javax.swing.JTextField();
-        lbDicaP4 = new javax.swing.JLabel();
-        p3t5 = new javax.swing.JTextField();
-        p5t3 = new javax.swing.JTextField();
-        lbDicaP5 = new javax.swing.JLabel();
-        p5t1 = new javax.swing.JTextField();
-        p2t6 = new javax.swing.JTextField();
-        p5t4 = new javax.swing.JTextField();
-        p5t5 = new javax.swing.JTextField();
-        p5t6 = new javax.swing.JTextField();
-        p5t7 = new javax.swing.JTextField();
-        p4t3 = new javax.swing.JTextField();
-        p4t4 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Palavras Cruzadas");
         setLocation(new java.awt.Point(500, 200));
         setMaximumSize(new java.awt.Dimension(500, 400));
         setMinimumSize(new java.awt.Dimension(500, 400));
-        getContentPane().setLayout(null);
-
-        lbDicaP1.setText("Dica");
-        getContentPane().add(lbDicaP1);
-        lbDicaP1.setBounds(80, 40, 28, 16);
 
         btOk.setText("Ok");
         btOk.setToolTipText("");
@@ -136,86 +136,48 @@ public class UI extends javax.swing.JFrame {
                 btOkPressed(evt);
             }
         });
-        getContentPane().add(btOk);
-        btOk.setBounds(370, 260, 28, 26);
-        getContentPane().add(p1t1);
-        p1t1.setBounds(80, 60, 28, 26);
-        getContentPane().add(lbResposta);
-        lbResposta.setBounds(280, 270, 80, 20);
-        getContentPane().add(p1t2);
-        p1t2.setBounds(80, 90, 28, 26);
-        getContentPane().add(p1t3);
-        p1t3.setBounds(80, 120, 28, 26);
-        getContentPane().add(p1t4);
-        p1t4.setBounds(80, 150, 28, 26);
-        getContentPane().add(p1t5);
-        p1t5.setBounds(80, 180, 28, 26);
 
-        lbDicaP2.setText("Dica");
-        getContentPane().add(lbDicaP2);
-        lbDicaP2.setBounds(20, 90, 28, 16);
-        getContentPane().add(p2t1);
-        p2t1.setBounds(50, 90, 28, 26);
-        getContentPane().add(p2t3);
-        p2t3.setBounds(110, 90, 28, 26);
-        getContentPane().add(p2t4);
-        p2t4.setBounds(140, 90, 28, 26);
-        getContentPane().add(p2t5);
-        p2t5.setBounds(170, 90, 28, 26);
-        getContentPane().add(p3t1);
-        p3t1.setBounds(170, 60, 28, 26);
-
-        lbDicaP3.setText("Dica");
-        getContentPane().add(lbDicaP3);
-        lbDicaP3.setBounds(170, 40, 28, 16);
-        getContentPane().add(p3t3);
-        p3t3.setBounds(170, 120, 28, 26);
-        getContentPane().add(p3t4);
-        p3t4.setBounds(170, 150, 28, 26);
-
-        lbDicaP4.setText("Dica");
-        getContentPane().add(lbDicaP4);
-        lbDicaP4.setBounds(140, 180, 28, 16);
-        getContentPane().add(p3t5);
-        p3t5.setBounds(170, 180, 28, 26);
-        getContentPane().add(p5t3);
-        p5t3.setBounds(200, 120, 28, 26);
-
-        lbDicaP5.setText("Dica");
-        getContentPane().add(lbDicaP5);
-        lbDicaP5.setBounds(200, 40, 28, 16);
-        getContentPane().add(p5t1);
-        p5t1.setBounds(200, 60, 28, 26);
-        getContentPane().add(p2t6);
-        p2t6.setBounds(200, 90, 28, 26);
-        getContentPane().add(p5t4);
-        p5t4.setBounds(200, 150, 28, 26);
-        getContentPane().add(p5t5);
-        p5t5.setBounds(200, 180, 28, 26);
-        getContentPane().add(p5t6);
-        p5t6.setBounds(200, 210, 28, 26);
-        getContentPane().add(p5t7);
-        p5t7.setBounds(200, 240, 28, 26);
-        getContentPane().add(p4t3);
-        p4t3.setBounds(230, 180, 28, 26);
-        getContentPane().add(p4t4);
-        p4t4.setBounds(260, 180, 28, 26);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(280, 280, 280)
+                .addComponent(lbResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btOk)
+                .addGap(32, 32, 32))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(270, 270, 270)
+                .addComponent(lbResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(260, 260, 260)
+                .addComponent(btOk))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btOkPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOkPressed
-        String resposta = p1t1.getText() + p1t2.getText() + p1t3.getText() + p1t4.getText() + p1t5.getText();
-        String resposta2 = p2t1.getText() + p1t2.getText() + p2t3.getText() + p2t4.getText() + p2t5.getText() + p2t6.getText();
-        String resposta3 = p3t1.getText() + p2t5.getText() + p3t3.getText() + p3t4.getText() + p3t5.getText();
-        resposta = resposta.toLowerCase();
-        resposta2 = resposta2.toLowerCase();
-        resposta3 = resposta3.toLowerCase();
-        if(resposta.equals(palavra1[1]) && resposta2.equals(palavra2[1]) && resposta3.equals(palavra3[1]))
-            lbResposta.setText("Acertou");
-        else
-            lbResposta.setText("Errou");
-        lbResposta.setVisible(true);
+        String[] resposta = new String[quantidadePalavras];
+        for(int i = 0; i < quantidadePalavras; i++)
+        {
+            resposta[i] = "";
+            for(int j = 0; j < bancoPalavras[i][1].length(); j++)
+                resposta[i] += textPalavra[j].getText();
+            resposta[i] = resposta[i].toLowerCase();
+        }
+        for(int i = 0; i < quantidadePalavras; i++)
+        {
+            if(resposta[i].equals(bancoPalavras[i][1]))
+                lbResposta.setText("Acertou");
+            else
+                lbResposta.setText("Errou");
+            lbResposta.setVisible(true);
+        }
     }//GEN-LAST:event_btOkPressed
 
     
@@ -254,36 +216,10 @@ public class UI extends javax.swing.JFrame {
             }
         });
     }
-
+    //Variaveis da GUI geradas pelo Netbeans
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btOk;
-    private javax.swing.JLabel lbDicaP1;
-    private javax.swing.JLabel lbDicaP2;
-    private javax.swing.JLabel lbDicaP3;
-    private javax.swing.JLabel lbDicaP4;
-    private javax.swing.JLabel lbDicaP5;
     private javax.swing.JLabel lbResposta;
-    private javax.swing.JTextField p1t1;
-    private javax.swing.JTextField p1t2;
-    private javax.swing.JTextField p1t3;
-    private javax.swing.JTextField p1t4;
-    private javax.swing.JTextField p1t5;
-    private javax.swing.JTextField p2t1;
-    private javax.swing.JTextField p2t3;
-    private javax.swing.JTextField p2t4;
-    private javax.swing.JTextField p2t5;
-    private javax.swing.JTextField p2t6;
-    private javax.swing.JTextField p3t1;
-    private javax.swing.JTextField p3t3;
-    private javax.swing.JTextField p3t4;
-    private javax.swing.JTextField p3t5;
-    private javax.swing.JTextField p4t3;
-    private javax.swing.JTextField p4t4;
-    private javax.swing.JTextField p5t1;
-    private javax.swing.JTextField p5t3;
-    private javax.swing.JTextField p5t4;
-    private javax.swing.JTextField p5t5;
-    private javax.swing.JTextField p5t6;
-    private javax.swing.JTextField p5t7;
     // End of variables declaration//GEN-END:variables
+    
 }
