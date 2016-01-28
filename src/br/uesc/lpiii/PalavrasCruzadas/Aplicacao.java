@@ -12,7 +12,6 @@ public class Aplicacao
 {
     public static void main(String[] args)
     {
-       
-        new UI().setVisible(true);
+        new UI_Menu().setVisible(true);
     }
 }

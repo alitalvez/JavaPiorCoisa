@@ -5,31 +5,6 @@
  */
 package br.uesc.lpiii.PalavrasCruzadas;
 
-/*
-    Desse jeito que eu to fazendo não vai dar certo,
-    não consigo fazer os shapes já prontos e só jogar palavras aleatorias
-    pois são poucas palavras e assim ele não vai atender a todos os pedidos
-    como é o caso desse codigo agora, provavalmente no dicionario não existam
-    as 3 palavras necessarias pra rodar, por isso não está funcionando.
-    Preciso gerar os TextBox de acordo com o tamanho das palavras
-    e não as palavras de acordo com os TextBox.
-
-    Uma ideia para gerar os TextBox depois das palavras é:
-    Ter um vetor de TextBox[] sem especificar tamanho para alocar dinamicamente.
-    Pegar uma palavra qualquer, verificar a quantidade de letras.
-    Dentro de um laço gerar os TextBox e ter os seguintes passos:
-        Gera o TextBox
-        Colocar na posição (x, y) que vai ser definido
-        Aumentar o valor de x e y
-    Fazer isso a quantidade de letras da palavra.
-    Desse jeito, teoricamente, vou ter um vetor de TextBox com a quantidade 
-    correta de letras e alinhado.
-    
-    Agora falta tentar pensar o resto, vou dormir pq já ta tarde e tenho que trabalhar.
-        
-*/
-
-
 import java.awt.Point;
 import java.io.File;
 import java.util.Random;
@@ -40,7 +15,7 @@ import javax.swing.JTextField;
  *
  * @author gabriel
  */
-public class UI extends javax.swing.JFrame 
+public class UI_Partida extends javax.swing.JFrame 
 {
 
     /*
@@ -57,12 +32,12 @@ public class UI extends javax.swing.JFrame
  
     int quantidadePalavras;
     
-    JTextField textPalavra[];
-    JTextField bancoText[][];
+    JTextField[] textPalavra;
+    JTextField[][] bancoText;
     
     JLabel lbDica[];
     
-    public UI() {
+    public UI_Partida() {
         initComponents();
         
         Point localizacao = new Point(20, 60);
@@ -132,7 +107,7 @@ public class UI extends javax.swing.JFrame
         setMaximumSize(new java.awt.Dimension(500, 400));
         setMinimumSize(new java.awt.Dimension(500, 400));
 
-        btOk.setText("Ok");
+        btOk.setText("Finalizar");
         btOk.setToolTipText("");
         btOk.setName(""); // NOI18N
         btOk.addActionListener(new java.awt.event.ActionListener() {
@@ -145,8 +120,8 @@ public class UI extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(375, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(342, Short.MAX_VALUE)
                 .addComponent(lbResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(btOk)
@@ -188,40 +163,7 @@ public class UI extends javax.swing.JFrame
 
     
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UI().setVisible(true);
-            }
-        });
-    }
+    
     //Variaveis da GUI geradas pelo Netbeans
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btOk;
