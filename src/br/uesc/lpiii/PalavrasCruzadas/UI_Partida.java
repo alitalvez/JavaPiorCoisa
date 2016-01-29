@@ -6,8 +6,7 @@
 package br.uesc.lpiii.PalavrasCruzadas;
 
 import java.awt.Point;
-import java.io.File;
-import java.util.Random;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -24,69 +23,98 @@ public class UI_Partida extends javax.swing.JFrame
     String[] palavra;
     String[][] bancoPalavras;
     
-    LeitorDicionario leitor;
-    
-    File dicionario;
-    
-    int tamanhoDicionario;
- 
     int quantidadePalavras;
     
     JTextField[] textPalavra;
     JTextField[][] bancoText;
     
-    JLabel lbDica[];
+    JLabel[] lbDica;
     
-    public UI_Partida() {
-        initComponents();
-        
-        Point localizacao = new Point(20, 60);
-        Random gerador = new Random();
-        leitor = new LeitorDicionario();
-        dicionario = new File("extras/dicionarioPalCruz.txt");
-        tamanhoDicionario = leitor.QuantidadeLinhas(dicionario);
-        quantidadePalavras = 0;
-        while(quantidadePalavras < 5)
-            quantidadePalavras = gerador.nextInt(15) + 1;
-        
-        bancoPalavras = new String[quantidadePalavras][2];
-        
+    int[] posNasPalavras;
+    
+    int[] posNoPivout;
+    
+    
+    public UI_Partida(String[][] bancoPalavras, int quantidadePalavras, int[] PosNela, int[] PosPivout) 
+    {
+        this.bancoPalavras = bancoPalavras;
+        this.quantidadePalavras = quantidadePalavras;
+        posNasPalavras = new int[quantidadePalavras];
+        posNoPivout = new int[quantidadePalavras];
         for(int i = 0; i < quantidadePalavras; i++)
         {
-            palavra = leitor.LeituraAleatoria(dicionario, tamanhoDicionario);
-            bancoPalavras[i][0] = palavra[0];
-            bancoPalavras[i][1] = palavra[1].toLowerCase();
+            posNasPalavras[i] = PosNela[i];
+            posNoPivout[i] = PosPivout[i];
         }
-        for(int i = 0; i < quantidadePalavras; i++)
-            System.out.println("Palavra " + (i+1) + ": " + bancoPalavras[i][1]);
-        
-        
+        initMyComponents();
+    }
+    
+    private void initMyComponents()
+    {
+        initComponents();
+        Point localizacao = new Point(350, 50);
         bancoText = new JTextField[quantidadePalavras][];
         lbDica = new JLabel[quantidadePalavras];
-        for(int j = 0; j < quantidadePalavras; j++)
-        {
-            textPalavra = new JTextField[bancoPalavras[j][1].length()];
-            lbDica[j] = new JLabel();
-            lbDica[j].setSize(30, 30);
-            lbDica[j].setLocation(localizacao);
-            lbDica[j].setText("Dica");
-            lbDica[j].setToolTipText(bancoPalavras[j][0]);
-            lbDica[j].setVisible(true);
-            this.add(lbDica[j]);
-            bancoText[j] = new JTextField[bancoPalavras[j][1].length()];
-            for(int i = 0; i < bancoPalavras[j][1].length();i++)
-            {
-                textPalavra[i] = new JTextField();
-                textPalavra[i].setSize(30, 30);
-                textPalavra[i].setLocation(localizacao.x + 30 + (i * 30) , localizacao.y);
-                textPalavra[i].setVisible(true);
-                bancoText[j][i] = textPalavra[i];
-                this.add(textPalavra[i]);
-            }
-            localizacao.setLocation(localizacao.x, localizacao.y + 30);
-        }
         
-        lbResposta.setVisible(false);
+        
+        textPalavra = new JTextField[bancoPalavras[0][1].length()];
+        lbDica[0] = new JLabel();
+        lbDica[0].setSize(30, 30);
+        lbDica[0].setLocation(350, 25);
+        lbDica[0].setText("Dica");
+        lbDica[0].setToolTipText(bancoPalavras[0][0]);
+        lbDica[0].setVisible(true);
+        this.add(lbDica[0]);
+        bancoText[0] = new JTextField[bancoPalavras[0][1].length()];
+        for(int i = 0; i < bancoPalavras[0][1].length(); i++)
+        {
+            textPalavra[i] = new JTextField();
+            textPalavra[i].setSize(30, 30);
+            textPalavra[i].setLocation(localizacao);
+            textPalavra[i].setVisible(true);
+            bancoText[0][i] = textPalavra[i];
+            this.add(textPalavra[i]);
+            localizacao.setLocation(localizacao.x, localizacao.y + 35);
+        }
+        montaTextField();
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    
+    private void montaTextField()
+    {
+        Point localPivout = new Point(350, 40); 
+        for(int i = 1; i < quantidadePalavras; i++)
+        {
+                                              // -1 * pra ficar negativo | + 1 pq da label é da label                  | + 10 pq da label         
+            Point localPalavra = new Point(localPivout.x +( -1 * ((posNasPalavras[i] + 1) * 35)), localPivout.y + (posNoPivout[i] * 35) + 10);
+            
+            textPalavra = new JTextField[bancoPalavras[i][1].length()];
+            lbDica[i] = new JLabel();
+            lbDica[i].setSize(30, 30);
+            lbDica[i].setLocation(localPalavra);
+            lbDica[i].setText("Dica");
+            lbDica[i].setToolTipText(bancoPalavras[i][0]);
+            lbDica[i].setVisible(true);
+            this.add(lbDica[i]);
+            localPalavra.setLocation(localPalavra.x + 35, localPalavra.y);
+            bancoText[i] = new JTextField[bancoPalavras[i][1].length()];
+            for(int j = 0; j < bancoPalavras[i][1].length(); j++)
+            {
+                if(j != posNasPalavras[i])
+                {
+                    textPalavra[j] = new JTextField();
+                    textPalavra[j].setSize(30, 30);
+                    textPalavra[j].setLocation(localPalavra);
+                    textPalavra[j].setVisible(true);
+                    bancoText[i][j] = textPalavra[j];
+                    this.add(textPalavra[j]);
+                }
+                else
+                    bancoText[i][j] = bancoText[0][posNoPivout[i]];
+                localPalavra.setLocation(localPalavra.x + 35, localPalavra.y);
+            }
+        }
     }
 
     /**
@@ -98,8 +126,8 @@ public class UI_Partida extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btOk = new javax.swing.JButton();
-        lbResposta = new javax.swing.JLabel();
+        btProximoJogo = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Palavras Cruzadas");
@@ -107,12 +135,19 @@ public class UI_Partida extends javax.swing.JFrame
         setMaximumSize(new java.awt.Dimension(500, 400));
         setMinimumSize(new java.awt.Dimension(500, 400));
 
-        btOk.setText("Finalizar");
-        btOk.setToolTipText("");
-        btOk.setName(""); // NOI18N
-        btOk.addActionListener(new java.awt.event.ActionListener() {
+        btProximoJogo.setText("Proximo Jogo");
+        btProximoJogo.setToolTipText("");
+        btProximoJogo.setName(""); // NOI18N
+        btProximoJogo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btOkPressed(evt);
+                btProximoJogoPressed(evt);
+            }
+        });
+
+        jButton1.setText("Novo Jogo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -121,53 +156,41 @@ public class UI_Partida extends javax.swing.JFrame
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(342, Short.MAX_VALUE)
-                .addComponent(lbResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(btOk)
-                .addGap(29, 29, 29))
+                .addContainerGap(492, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btProximoJogo)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(449, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(lbResposta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btOk))
-                .addGap(23, 23, 23))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(451, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(btProximoJogo))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btOkPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btOkPressed
-        String[] resposta = new String[quantidadePalavras];
-        for(int i = 0; i < quantidadePalavras; i++)
-        {
-            resposta[i] = "";
-            for(int j = 0; j < bancoPalavras[i][1].length(); j++)
-                resposta[i] += bancoText[i][j].getText();
-            resposta[i] = resposta[i].toLowerCase();
-        }
-        for(int i = 0; i < quantidadePalavras; i++)
-        {
-            if(resposta[i].equals(bancoPalavras[i][1]))
-                lbResposta.setText("Acertou");
-            else
-                lbResposta.setText("Errou");
-            lbResposta.setVisible(true);
-        }
-    }//GEN-LAST:event_btOkPressed
+    private void btProximoJogoPressed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btProximoJogoPressed
+      
+    }//GEN-LAST:event_btProximoJogoPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new UI_Menu().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
     
     
     //Variaveis da GUI geradas pelo Netbeans
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btOk;
-    private javax.swing.JLabel lbResposta;
+    private javax.swing.JButton btProximoJogo;
+    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
     
 }

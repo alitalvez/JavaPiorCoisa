@@ -6,7 +6,9 @@
 package br.uesc.lpiii.PalavrasCruzadas;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -18,8 +20,16 @@ public class UI_Menu extends javax.swing.JFrame {
     /**
      * Creates new form UI_Menu
      */
-    public UI_Menu() {
+    public UI_Menu() 
+    {
+        initMyComponents();
+        
+    }
+    
+    private void initMyComponents()
+    {
         initComponents();
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         groupButton();
     }
     
@@ -177,16 +187,16 @@ public class UI_Menu extends javax.swing.JFrame {
         {
             Jogador jogador1 = new Jogador(textJogador1.getText(), 0);
             Computador IA = new Computador(0);
-            Partida jogo = new Partida(jogador1, IA);
+            new Partida(jogador1, IA);
+            this.dispose();
         }
         
         else
         {
             Jogador jogador1 = new Jogador(textJogador1.getText(), 0);
             Jogador jogador2 = new Jogador(textJogador2.getText(), 0);
-            Partida jogo = new Partida(jogador1, jogador2);
-            new UI_Partida().setVisible(true);
-            this.setVisible(false);
+            new Partida(jogador1, jogador2);
+            this.dispose();
         }
             
     }//GEN-LAST:event_btJogarActionPerformed
