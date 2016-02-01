@@ -30,6 +30,11 @@ public class Jogador
         return pontos;
     }
     
+    public void addPontos()
+    {
+        pontos++;
+    }
+    
     public void setPontos(int pontos)
     {
         this.pontos = pontos;

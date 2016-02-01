@@ -5,6 +5,8 @@
  */
 package br.uesc.lpiii.PalavrasCruzadas;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -28,8 +30,20 @@ public class UI_Menu extends javax.swing.JFrame {
     
     private void initMyComponents()
     {
-        initComponents();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        initComponents();        
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e)
+            {
+                int result = JOptionPane.showConfirmDialog(null,"Tem certeza que quer sair do jogo?", "Sair do Jogo", JOptionPane.YES_NO_OPTION);
+                if(result == JOptionPane.YES_OPTION)
+                {
+                    new UI_Menu().setVisible(true);
+                    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                }
+            }
+        });
         groupButton();
     }
     
@@ -68,6 +82,7 @@ public class UI_Menu extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Palavras Cruzadas");
@@ -99,7 +114,13 @@ public class UI_Menu extends javax.swing.JFrame {
 
         jMenu1.setText("Ajuda");
 
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItem1.setText("Manual");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
@@ -111,6 +132,9 @@ public class UI_Menu extends javax.swing.JFrame {
 
         jMenuItem4.setText("Sobre");
         jMenu2.add(jMenuItem4);
+
+        jMenuItem2.setText("Adicionar Palavra");
+        jMenu2.add(jMenuItem2);
 
         jMenuBar1.add(jMenu2);
 
@@ -200,6 +224,10 @@ public class UI_Menu extends javax.swing.JFrame {
         }
             
     }//GEN-LAST:event_btJogarActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        System.out.println("teste");
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -208,6 +236,7 @@ public class UI_Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JLabel lbJogador1;

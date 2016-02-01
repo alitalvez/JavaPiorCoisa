@@ -93,6 +93,6 @@ public class Partida
             }
         }
         
-        guiJogo = new UI_Partida(bancoPalavras, quantidadePalavras, posNasPalavras, posNoPivout);
+        guiJogo = new UI_Partida(bancoPalavras, quantidadePalavras, posNasPalavras, posNoPivout, jogador1, jogador2);
     }
 }

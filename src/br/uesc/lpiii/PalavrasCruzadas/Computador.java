@@ -19,6 +19,11 @@ public class Computador extends Jogador
         this.pontos = pontos;
     }
     
+    public void addPontos()
+    {
+        pontos++;
+    }
+    
     public int getPontos()
     {
         return pontos;
