@@ -210,8 +210,8 @@ public class UI_Menu extends javax.swing.JFrame {
         else if(rbIA.isSelected())
         {
             Jogador jogador1 = new Jogador(textJogador1.getText(), 0);
-            Computador IA = new Computador(0);
-            new Partida(jogador1, IA);
+            Jogador IA = new Computador(0);
+            new Partida(jogador1, IA, 0);
             this.dispose();
         }
         
@@ -219,7 +219,7 @@ public class UI_Menu extends javax.swing.JFrame {
         {
             Jogador jogador1 = new Jogador(textJogador1.getText(), 0);
             Jogador jogador2 = new Jogador(textJogador2.getText(), 0);
-            new Partida(jogador1, jogador2);
+            new Partida(jogador1, jogador2, 0);
             this.dispose();
         }
             

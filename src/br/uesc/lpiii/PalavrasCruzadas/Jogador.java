@@ -11,7 +11,7 @@ package br.uesc.lpiii.PalavrasCruzadas;
  */
 public class Jogador 
 {
-    private String nome;
+    private final String nome;
     private int pontos;
     
     public Jogador(String nome, int pontos)
@@ -35,8 +35,18 @@ public class Jogador
         pontos++;
     }
     
-    public void setPontos(int pontos)
+    public String consultaBanco(String dicas)
     {
-        this.pontos = pontos;
+        return null;
+    }
+    
+    public void addNoBanco(String dica, String palavra)
+    {
+        
+    }
+    
+    public void esqueceBanco()
+    {
+        
     }
 }

@@ -5,7 +5,6 @@
  */
 package br.uesc.lpiii.PalavrasCruzadas;
 import java.io.File;
-import java.util.Random;
 
 
 /**
@@ -34,11 +33,14 @@ public class Partida
     int[] posNasPalavras;
     
     int[] posNoPivout;
-        
-    public Partida(Jogador jogador1, Jogador jogador2)
+    
+    int numeroPartidas;
+    
+    public Partida(Jogador jogador1, Jogador jogador2, int numeroPartidas)
     {
         this.jogador1 = jogador1;
         this.jogador2 = jogador2;
+        this.numeroPartidas = numeroPartidas;
         geraPalavras();
     }
     
@@ -53,7 +55,6 @@ public class Partida
             palavra = leitor.LeituraAleatoria(dicionario, tamanhoDicionario);
             quantidadePalavras = palavra[1].length() + 1;
         }
-        
         //Cada palavra vem armazenada em um vetor de 2 posições, onde em 0 fica a dica e em 1 a palavra
         bancoPalavras = new String[quantidadePalavras][2]; //Alocação da quantidade sorteada de palavras
         
@@ -93,6 +94,6 @@ public class Partida
             }
         }
         
-        guiJogo = new UI_Partida(bancoPalavras, quantidadePalavras, posNasPalavras, posNoPivout, jogador1, jogador2);
+        guiJogo = new UI_Partida(bancoPalavras, quantidadePalavras, posNasPalavras, posNoPivout, jogador1, jogador2, numeroPartidas);
     }
 }
