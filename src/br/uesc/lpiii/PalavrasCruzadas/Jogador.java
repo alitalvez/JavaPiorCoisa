@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.uesc.lpiii.PalavrasCruzadas;
 
-/**
+/**Classe responsavel pela criação do tipo Jogador.
+ * Aqui é guardado o nome do jogador e a sua pontuação.
  *
  * @author gabriel
  */
@@ -34,19 +30,11 @@ public class Jogador
     {
         pontos++;
     }
-    
+    /**Os métodos a seguir só existem de verdade na classe Computador que é filha desta classe*/
     public String consultaBanco(String dicas)
     {
         return null;
     }
-    
-    public void addNoBanco(String dica, String palavra)
-    {
-        
-    }
-    
-    public void esqueceBanco()
-    {
-        
-    }
+    public void addNoBanco(String dica, String palavra){}
+    public void esqueceBanco(){}
 }

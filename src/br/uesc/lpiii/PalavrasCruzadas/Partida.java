@@ -1,41 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.uesc.lpiii.PalavrasCruzadas;
-import java.io.File;
 
 
-/**
+/** Classe responsavel por gerar a partida.
+ * Nela é instanciado a UI da partida e passado os jogadores, juntamente as palavras do jogo que são geradas aqui.
  *
  * @author gabriel
  */
 public class Partida 
 {
-    Dicionario leitor;
-    
-    File dicionario;
-    
-    
-    int tamanhoDicionario;
+    Dicionario leitor; /**Objeto do tipo Dicionario que vai ser utilizado para leitura das palavras e dicas*/
  
-    int quantidadePalavras;
+    int quantidadePalavras; /**Quantidade de palavras na partida*/
     
     Jogador jogador1;
     Jogador jogador2;
     
-    String[] palavra;
-    String[][] bancoPalavras;
+    String[] palavra; /**Vetor temporario utilizado para ler palavra e dica do dicionario e passao para o banco*/
+    String[][] bancoPalavras; /**Matriz contendo as palavras e as dicas da partida*/
     
-    UI_Partida guiJogo;
+
+    int[] posNasPalavras; /**Vetor com posição da letra da palavra de acordo com o pivou, usado para montar as palavras cruzadas*/
     
-    int[] posNasPalavras;
-    
-    int[] posNoPivout;
+    int[] posNoPivout; /**Vetor com posição da letra no pivout usada na palavra*/
     
     int numeroPartidas;
     
+    /**
+     * Construtor da classe, onde é chamado o método de gerar as palavras para o jogo
+     * @param jogador1
+     * @param jogador2
+     * @param numeroPartidas Numero de partidas jogadas
+     */
     public Partida(Jogador jogador1, Jogador jogador2, int numeroPartidas)
     {
         this.jogador1 = jogador1;
@@ -46,13 +41,16 @@ public class Partida
     
     private void geraPalavras()
     {
+        /**Neste método é lido do dicionario uma palavra com quantidade de letras maior que 5.
+           A partir dessa primeira palavra lida(pivout) é lido mais outras palavras que contenham,
+            letras que encaixem nesse pivout, pegando assim na palavra e no pivout as posições de
+            encaixe.*/
+        
         leitor = new Dicionario(); //Leitor do dicionario
-        dicionario = new File("extras/dicionarioPalCruz.txt"); //Arquivo do dicionario
-        tamanhoDicionario = leitor.QuantidadeLinhas(dicionario); //Leitura da quantidade de linhas para leitura aleatoria
         quantidadePalavras = 0; // Inicialização
         while(quantidadePalavras < 5) //Gera a primeira palavra que será na vertical, precisa ter mais que 5 letras
         {    
-            palavra = leitor.LeituraAleatoria(dicionario, tamanhoDicionario);
+            palavra = leitor.LeituraAleatoria();
             quantidadePalavras = palavra[1].length() + 1;
         }
         //Cada palavra vem armazenada em um vetor de 2 posições, onde em 0 fica a dica e em 1 a palavra
@@ -60,7 +58,6 @@ public class Partida
         
         bancoPalavras[0][0] = palavra[0];
         bancoPalavras[0][1] = palavra[1].toLowerCase();
-        System.out.println("Palavra " + (1) + ": " + bancoPalavras[0][1]);
         boolean repetida = false;
         posNoPivout = new int[quantidadePalavras];
         posNasPalavras = new int[quantidadePalavras];
@@ -68,13 +65,13 @@ public class Partida
         int i = 1;
         while(i < quantidadePalavras)
         {
-            palavra = leitor.LeituraAleatoria(dicionario, tamanhoDicionario);
+            palavra = leitor.LeituraAleatoria();
             palavra[1] = palavra[1].toLowerCase();
-            //Vou andar a palavra lida e procurar a primeira letra do pivout em qualquer posição da palavra nova
+            //Percorre a palavra lida e procura a 'J' letra do pivout em qualquer posição da palavra nova
             for(int j = 0; j < palavra[1].length(); j++)
             {
                 for(int w = 0; w < i; w++)
-                {
+                { /**Verifica se a palavra lida não já foi lida antes e se não é a mesma do pivout*/
                     if(palavra[1].equals(bancoPalavras[w][1]) || palavra[1].equals(bancoPalavras[0][1]))
                         repetida = true;
                 }
@@ -82,7 +79,6 @@ public class Partida
                 {
                     bancoPalavras[i][0] = palavra[0];
                     bancoPalavras[i][1] = palavra[1].toLowerCase();
-                    System.out.println("Palavra: " + palavra[1]);
                     posNasPalavras[i] = j;
                     posNoPivout[i] = i - 1;
                     i++;
@@ -93,7 +89,7 @@ public class Partida
                     
             }
         }
-        
-        guiJogo = new UI_Partida(bancoPalavras, quantidadePalavras, posNasPalavras, posNoPivout, jogador1, jogador2, numeroPartidas);
+        /**Assim que todas as palavras forem lidas é instanciado a UI da partida.*/
+        new UI_Partida(bancoPalavras, quantidadePalavras, posNasPalavras, posNoPivout, jogador1, jogador2, numeroPartidas);
     }
 }

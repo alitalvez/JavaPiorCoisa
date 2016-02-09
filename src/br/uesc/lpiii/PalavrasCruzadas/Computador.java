@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.uesc.lpiii.PalavrasCruzadas;
 
-/**
+/**Classe responsavel por criar o tipo Computador que herda o tipo Jogador.
  *
  * @author gabriel
  */
@@ -13,37 +8,45 @@ public class Computador extends Jogador
 {
     
     
-    String[][] bancoDicas;
+    private String[][] bancoDicas; /**Matriz com o banco de dicas e palavras aprendidadas pelo Computador*/
     
-    private int bdPos;
-    private String nome;
+    private int bdPos; /**Posição atual no banco de dicas*/
     
     public Computador(int pontos)
     {
         super("Computador", pontos);
-        bdPos = 5;
+        Dicionario leitor = new Dicionario();
+        bdPos = 15;
         bancoDicas = new String[186][2];
-        //A IA vem com 5 palavras quaisquer já no banco
-        bancoDicas[0][0] = "Rugoso";
-        bancoDicas[0][1] = "rofo";
-        bancoDicas[1][0] = "pequeno automóvel, com embreagem automática, sem carroceria, nem caixas de mudanças, nem suspensão";
-        bancoDicas[1][1] = "kart";
-        bancoDicas[2][0] = "ritmo de dança originário da América Latina";
-        bancoDicas[2][1] = "bamba";
-        bancoDicas[3][0] = "desconfiança, temor ou antipatia por pessoas estranhas ao meio daquele que as ajuíza, ou pelo que é incomum ou vem de fora do país";
-        bancoDicas[3][1] = "xenofobia";
-        bancoDicas[4][0] = "soldado turco ou egípcio, filho de cristãos, subtraído em criança a seus pais, doutrinado no maometismo e adestrado para a guerra";
-        bancoDicas[4][1] = "rume";
+        //A IA vem com 15 palavras quaisquer já no banco
+        for(int i = 0; i < 15; i++)
+            bancoDicas[i] = leitor.LeituraAleatoria();
     }
     
+    
+    /**Método responsavel por adicionar nova palavra ao banco de dados do Computador.
+     *@param dica
+     *@param palavra */
     @Override
     public void addNoBanco(String dica, String palavra)
     {
-        bancoDicas[bdPos][0] = dica;
-        bancoDicas[bdPos][1] = palavra;
-        bdPos++;
+        if(bdPos == 186) /**Se banco estiver cheio, esquece 5 palavras para adicionar novas*/
+            esqueceBanco();
+        else
+        {
+            /**Se a palavra a ser adicionada já não existir no banco ela é adicionada*/
+            if(consultaBanco(dica) != null)
+            {
+                bancoDicas[bdPos][0] = dica;
+                bancoDicas[bdPos][1] = palavra;
+                bdPos++;
+            }
+        }
     }
     
+    /**Método responsavel por buscar e retornar uma palavra no banco a partir de uma dica
+     * @param dica.
+     * @return palavra.*/
     @Override
     public String consultaBanco(String dica)
     {
@@ -60,6 +63,8 @@ public class Computador extends Jogador
         return palavra;
     }
     
+    /**Método responsavel por fazer o computador esquecer 5 palavras a cada 5 jogos*/
+    @Override
     public void esqueceBanco()
     {
         for(int i = 5; i < bdPos; i++)
